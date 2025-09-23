@@ -1,0 +1,6 @@
+# Ignore python cache
+__pycache__/
+
+# Ignore scan files
+*.mha
+*.nii
