@@ -28,7 +28,7 @@ source .venv/bin/activate
 ## Quickstart
 ```python 
 import torch, SimpleITK as sitk
-from maisi_vae import MaisiVAE  # your file
+from MaisiVAE import MaisiVAE  # your file
 
 # Read data (D,H,W)
 ct = torch.from_numpy(sitk.GetArrayFromImage(sitk.ReadImage("ct.mha"))).float()
