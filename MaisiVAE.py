@@ -34,7 +34,7 @@ class MaisiVAE:
     def __init__(
         self,
         config_dir: str,
-        weights_dir: str = "/local/scratch/dtaskiran/tmp/models",
+        weights_dir: str = "models",
         weight_filename: str = "autoencoder_epoch273.pt",
         download_weights: bool = True,
         gpu_id: int = 0,
@@ -298,9 +298,9 @@ class MaisiVAE:
 if __name__ == "__main__":
     ### Example usage with test data
     # Paths to your data
-    ct_path = '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_ct.mha'
-    mr_path = '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_mr.mha'
-    mask_path = '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_mask.mha'
+    ct_path = '/home/ubuntu/1ABA011_real_ct.mha'
+    mr_path = '/home/ubuntu/1ABA011_real_mr.mha'
+    mask_path = '/home/ubuntu/1ABA011_real_mask.mha'
 
     # Read data using SimpleITK
     ct_sitk = sitk.ReadImage(ct_path)
@@ -314,8 +314,7 @@ if __name__ == "__main__":
     print(f"CT shape: {ct.shape}, MR shape: {mr.shape}, Mask shape: {mask.shape}")
 
     # initialize MAISI VAE
-    maisi_vae = MaisiVAE(config_dir='/local/scratch/dtaskiran/tutorials/generation/maisi/configs', 
-                         gpu_id=2, progress_bar=True)
+    maisi_vae = MaisiVAE(config_dir='configs', progress_bar=True)
 
     # Encode CT and MR to latent
     latent_ct = maisi_vae.encode(torch.as_tensor(ct), torch.as_tensor(mask), modality='ct', scale_factor=1)
@@ -324,12 +323,12 @@ if __name__ == "__main__":
 
     # Save latent (isVector for multi-channel output)
     latent_ct_dhwc = latent_ct.permute(1, 2, 3, 0).cpu().numpy()  # [D,H,W,C]
-    output_filename = '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_latent_ct.mha'
+    output_filename = '/home/ubuntu/1ABA011_latent_ct.mha'
     image = sitk.GetImageFromArray(latent_ct_dhwc, isVector=True)
     sitk.WriteImage(image, output_filename)
 
     latent_mr_dhwc = latent_mr.permute(1, 2, 3, 0).cpu().numpy()  # [D,H,W,C]
-    output_filename = '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_latent_mr.mha'
+    output_filename = '/home/ubuntu/1ABA011_latent_mr.mha'
     image = sitk.GetImageFromArray(latent_mr_dhwc, isVector=True)
     sitk.WriteImage(image, output_filename)
 
@@ -338,6 +337,6 @@ if __name__ == "__main__":
     recon_mr_dhw, recon_mr_sitk = maisi_vae.decode(latent_mr, torch.as_tensor(mask), mr.shape, ref_sitk=mr_sitk)
     print(f"CT recon shape: {recon_ct_dhw.shape}, MR recon shape: {recon_mr_dhw.shape}")
 
-    sitk.WriteImage(recon_ct_sitk, '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_recon_ct.mha')
-    sitk.WriteImage(recon_mr_sitk, '/local/scratch/dtaskiran/tutorials/generation/maisi/1ABA011_recon_mr.mha')
+    sitk.WriteImage(recon_ct_sitk, '/home/ubuntu/1ABA011_recon_ct.mha')
+    sitk.WriteImage(recon_mr_sitk, '/home/ubuntu/1ABA011_recon_mr.mha')
 
