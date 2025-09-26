@@ -21,6 +21,7 @@ MAISI (Medical AI for Synthetic Imaging) is NVIDIA’s 3D latent-diffusion frame
 This process uses [uv](https://docs.astral.sh/uv/)
 
 ```bash
+git clone git@github.com:DTaskiran/MaisiVAE.git
 uv sync
 source .venv/bin/activate
 ```
