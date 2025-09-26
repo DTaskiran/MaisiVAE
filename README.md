@@ -46,4 +46,4 @@ recon_mr, mr_img = vae.decode(z_mr, mask, ref_img_shape=mr.shape, ref_sitk=sitk.
 ```
 
 ---
-See MAISI paper (arXiv) and NVIDIA NIM docs linked above for details and licensing. 
+See MAISI paper and NVIDIA NIM docs linked above for details and licensing. 
