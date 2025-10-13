@@ -22,6 +22,7 @@ This process uses [uv](https://docs.astral.sh/uv/)
 
 ```bash
 git clone git@github.com:sCT-Masters-Project/MaisiVAE.git
+cd MaisiVAE
 uv sync
 source .venv/bin/activate
 ```
